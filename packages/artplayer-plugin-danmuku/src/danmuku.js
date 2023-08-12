@@ -448,10 +448,12 @@ export default class Danmuku {
     }
 
     show() {
-        this.isHide = false;
-        this.start();
-        this.$danmuku.style.display = 'block';
-        this.art.emit('artplayerPluginDanmuku:show');
+        if(this.art.plugins.artplayerPluginDanmuku.option.danmuku !== ''){
+            this.isHide = false;
+            this.start();
+            this.$danmuku.style.display = 'block';
+            this.art.emit('artplayerPluginDanmuku:show');
+        }
         return this;
     }
 

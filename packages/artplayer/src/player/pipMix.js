@@ -17,12 +17,12 @@ function nativePip(art) {
             if (value) {
                 art.state = 'pip';
                 $video.requestPictureInPicture().catch((err) => {
-                    notice.show = err;
+                    notice.show = '视频源未配置';
                     throw err;
                 });
             } else {
                 document.exitPictureInPicture().catch((err) => {
-                    notice.show = err;
+                    notice.show = '视频源未配置';
                     throw err;
                 });
             }

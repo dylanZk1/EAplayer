@@ -1,4 +1,5 @@
 import { includeFromEvent, isMobile } from '../utils';
+import { DBCLICK_TIME } from 'artplayer';
 
 export default function clickInit(art, events) {
     const {
@@ -18,14 +19,10 @@ export default function clickInit(art, events) {
         }
     });
 
-    let clickTime = 0;
     events.proxy($video, 'click', (event) => {
-        const now = Date.now();
-        const { MOBILE_CLICK_PLAY, DBCLICK_TIME, MOBILE_DBCLICK_PLAY, DBCLICK_FULLSCREEN } = constructor;
-
-        if (now - clickTime <= DBCLICK_TIME) {
+        const { MOBILE_CLICK_PLAY, MOBILE_DBCLICK_PLAY, DBCLICK_FULLSCREEN } = constructor;
+        const click1 = debounce(()=>{
             art.emit('dblclick', event);
-
             if (isMobile) {
                 if (!art.isLock && MOBILE_DBCLICK_PLAY) {
                     art.toggle();
@@ -35,9 +32,8 @@ export default function clickInit(art, events) {
                     art.fullscreen = !art.fullscreen;
                 }
             }
-        } else {
+        },()=>{
             art.emit('click', event);
-
             if (isMobile) {
                 if (!art.isLock && MOBILE_CLICK_PLAY) {
                     art.toggle();
@@ -45,8 +41,26 @@ export default function clickInit(art, events) {
             } else {
                 art.toggle();
             }
-        }
-
-        clickTime = now;
+        });
+        click1();
     });
+
+    function debounce(doubleclick, singleclick, delay = DBCLICK_TIME) {
+        let timer = null
+        return function () {
+            // 如果timer有值代表前面已经点击了一次  那就返回
+            if (timer) {
+                console.log("没有执行")
+                clearTimeout(timer)
+                // 初始化 要不然永远会走这个if语句
+                timer = null
+                doubleclick();
+                return
+            }
+            timer = setTimeout((...args) => {
+                singleclick.apply(this, args)
+                timer = null
+            }, delay)
+        }
+    }
 }

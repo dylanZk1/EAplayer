@@ -56,7 +56,9 @@ export default function miniMix(art) {
             initState($play, $pause);
             art.on('video:playing', () => initState($play, $pause));
             art.on('video:pause', () => initState($play, $pause));
-            art.on('video:timeupdate', () => initState($play, $pause));
+            art.on('video:timeupdate', () => {
+                initState($play, $pause);
+            });
 
             proxy($mini, 'mousedown', (event) => {
                 isDroging = event.button === 0;

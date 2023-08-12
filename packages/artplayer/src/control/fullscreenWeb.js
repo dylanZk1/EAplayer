@@ -12,18 +12,18 @@ export default function fullscreenWeb(option) {
             setStyle($fullscreenWebOff, 'display', 'none');
 
             proxy($control, 'click', () => {
-                art.fullscreenWeb = !art.fullscreenWeb;
+                // art.fullscreenWeb = !art.fullscreenWeb;
             });
 
             art.on('fullscreenWeb', (value) => {
                 if (value) {
-                    tooltip($control, i18n.get('Exit Web Fullscreen'));
-                    setStyle($fullscreenWebOn, 'display', 'none');
-                    setStyle($fullscreenWebOff, 'display', 'inline-flex');
+                    // tooltip($control, i18n.get('Exit Web Fullscreen'));
+                    // setStyle($fullscreenWebOn, 'display', 'none');
+                    // setStyle($fullscreenWebOff, 'display', 'inline-flex');
                 } else {
-                    tooltip($control, i18n.get('Web Fullscreen'));
-                    setStyle($fullscreenWebOn, 'display', 'inline-flex');
-                    setStyle($fullscreenWebOff, 'display', 'none');
+                    // tooltip($control, i18n.get('Web Fullscreen'));
+                    // setStyle($fullscreenWebOn, 'display', 'inline-flex');
+                    // setStyle($fullscreenWebOff, 'display', 'none');
                 }
             });
         },

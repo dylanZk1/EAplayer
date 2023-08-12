@@ -52,6 +52,7 @@ export default function autoOrientation(art) {
                 await screen.orientation.lock(lastOrientation);
                 removeClass($player, 'art-auto-orientation-fullscreen');
             }
+            art.emit('fullscreenWeb', true);
         }
     });
 

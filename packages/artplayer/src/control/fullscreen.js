@@ -12,10 +12,12 @@ export default function fullscreen(option) {
             setStyle($fullscreenOff, 'display', 'none');
 
             proxy($control, 'click', () => {
-                art.fullscreen = !art.fullscreen;
+                console.log('FullScreenClick',art.fullscreen);
+                art.emit('changeFullScreen',0b0001,0b0100);
             });
 
             art.on('fullscreen', (state) => {
+                console.log("fullControl",state)
                 if (state) {
                     tooltip($control, i18n.get('Exit Fullscreen'));
                     setStyle($fullscreenOn, 'display', 'none');
@@ -24,6 +26,7 @@ export default function fullscreen(option) {
                     tooltip($control, i18n.get('Fullscreen'));
                     setStyle($fullscreenOn, 'display', 'inline-flex');
                     setStyle($fullscreenOff, 'display', 'none');
+                    art.fullscreenWeb = true
                 }
             });
         },

@@ -12,7 +12,7 @@ export default function playMix(art) {
     def(art, 'play', {
         value: async function () {
             const result = await $video.play();
-            notice.show = i18n.get('Play');
+            // notice.show = i18n.get('Play');
             art.emit('play');
 
             if (option.mutex) {

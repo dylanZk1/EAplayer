@@ -81,9 +81,9 @@ export default class Setting extends Component {
             result.push(flip(this.art));
         }
 
-        if (option.subtitleOffset) {
-            result.push(subtitleOffset(this.art));
-        }
+        // if (option.subtitleOffset) {
+        //     result.push(subtitleOffset(this.art));
+        // }
 
         return result;
     }

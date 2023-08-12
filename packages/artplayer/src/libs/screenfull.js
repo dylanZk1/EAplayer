@@ -43,6 +43,32 @@ const methodMap = [
     ],
 ];
 
+let returnPromise;
+
+var FullScreenMode = {
+    F11Enter:0b0001,
+    ButtonEnter:0b0010,
+    EscExit:0b0100,
+    ButtonExit:0b1000
+}
+
+var CurrentMode = {
+    Enter:0,
+    Exit:0,
+}
+
+// function changeCurrentModeEnter(enterMode){
+//     CurrentMode.Enter = enterMode;
+// }
+//
+// function changeCurrentModeExit(exitMode){
+//     CurrentMode.Exit = exitMode;
+// }
+
+function isExitModeExist(){
+    return CurrentMode;
+}
+
 const nativeAPI = (() => {
     if (typeof document === 'undefined') {
         return false;
@@ -71,7 +97,8 @@ const eventNameMap = {
 };
 
 let screenfull = {
-    request(element = document.documentElement, options) {
+    request(element = document.documentElement, options, EnterMode,rejectCallback) {
+        // changeCurrentModeEnter(EnterMode);
         return new Promise((resolve, reject) => {
             const onFullScreenEntered = () => {
                 screenfull.off('change', onFullScreenEntered);
@@ -79,17 +106,34 @@ let screenfull = {
             };
 
             screenfull.on('change', onFullScreenEntered);
+            rejectCallback();
 
-            const returnPromise = element[nativeAPI.requestFullscreen](options);
-
-            if (returnPromise instanceof Promise) {
-                returnPromise.then(onFullScreenEntered).catch(reject);
-            }
+            // switch (EnterMode) {
+            //     case FullScreenMode.ButtonEnter:
+            //         returnPromise = element[nativeAPI.requestFullscreen](options);
+            //         if (returnPromise instanceof Promise) {
+            //             returnPromise.then(onFullScreenEntered).catch((reject)=>{
+            //                 if(typeof(rejectCallback) === 'function'){
+            //                     // onFullScreenEntered()
+            //                     // changeerrorIsFullScreen(true)
+            //                     // // changeerrorIsFullScreen(true)
+            //                     // // changeerrorIsFullScreenMode("notDisplay")
+            //                     // rejectCallback(reject);
+            //                 }
+            //             });
+            //         }
+            //         break;
+            //     case FullScreenMode.F11Enter:
+            //         rejectCallback();
+            //         break;
+            // }
         });
     },
-    exit() {
+    exit(rejectCallback,ExitMode) {
+        // changeCurrentModeExit(ExitMode);
         return new Promise((resolve, reject) => {
-            if (!screenfull.isFullscreen) {
+            console.log("screenExitFull:",ExitMode);
+            if (ExitMode !== FullScreenMode.EscExit && ExitMode !== FullScreenMode.ButtonExit) {
                 resolve();
                 return;
             }
@@ -101,11 +145,33 @@ let screenfull = {
 
             screenfull.on('change', onFullScreenExit);
 
-            const returnPromise = document[nativeAPI.exitFullscreen]();
+            rejectCallback();
 
-            if (returnPromise instanceof Promise) {
-                returnPromise.then(onFullScreenExit).catch(reject);
-            }
+            // switch (ExitMode) {
+            //     case FullScreenMode.ButtonExit:
+            //         if(CurrentMode.Enter === FullScreenMode.F11Enter){
+            //             rejectCallback();
+            //             return;
+            //         }
+            //         returnPromise = document[nativeAPI.exitFullscreen]();
+            //         console.log("isPromise",returnPromise instanceof Promise);
+            //
+            //         if (returnPromise instanceof Promise) {
+            //             returnPromise.then(onFullScreenExit).catch((reject)=>{
+            //                 if(typeof(rejectCallback) === 'function'){
+            //                     // onFullScreenExit()
+            //                     // changeerrorIsFullScreen(false);
+            //                     // changeerrorIsFullScreenMode("");
+            //                     // rejectCallback(reject);
+            //                 }
+            //             });
+            //         }
+            //         break;
+            //     case FullScreenMode.EscExit:
+            //         rejectCallback();
+            //         break
+            // };
+            // changeCurrentMode(0,0);
         });
     },
     toggle(element, options) {
@@ -130,6 +196,18 @@ let screenfull = {
         }
     },
     raw: nativeAPI,
+    changeCurrentModeEnter(enterMode){
+        Object.assign(CurrentMode,{'Enter': enterMode})
+    },
+    changeCurrentModeExit(exitMode){
+        Object.assign(CurrentMode,{'Exit': exitMode})
+    },
+    changeCurrentMode(enterMode,exitMode){
+        Object.assign(CurrentMode,{'Enter':enterMode,'Exit': exitMode})
+    },
+    getCurrentMode(){
+      return CurrentMode;
+    },
 };
 
 Object.defineProperties(screenfull, {
@@ -144,6 +222,16 @@ Object.defineProperties(screenfull, {
         enumerable: true,
         get: () => Boolean(document[nativeAPI.fullscreenEnabled]),
     },
+    isExitModeExist: {
+        get: () => isExitModeExist(),
+    },
+    // changeCurrentModeEnter: {
+    //     get: (enter) => changeCurrentModeEnter(enter),
+    // },
+    // changeCurrentModeExit: {
+    //     get: (exit) => changeCurrentModeExit(exit),
+    // }
+
 });
 
 if (!nativeAPI) {

@@ -22,6 +22,7 @@ export default function loopMix(art) {
 
     art.on('video:timeupdate', () => {
         if (interval.length) {
+            console.log("BtimeUpdate",interval[0]);
             if (art.currentTime < interval[0] || art.currentTime > interval[1]) {
                 art.seek = interval[0];
             }

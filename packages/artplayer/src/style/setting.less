@@ -11,7 +11,7 @@
         transform-origin: bottom right;
         max-height: var(--art-settings-max-height);
         right: var(--art-padding);
-        bottom: var(--art-control-height);
+        bottom: 75px;
         transform: scale(var(--art-settings-scale));
         transition: all var(--art-transition-duration) ease;
         background-color: var(--art-widget-background);
@@ -30,7 +30,10 @@
                 align-items: center;
                 padding: 0 5px;
                 cursor: pointer;
+                white-space: nowrap;
+                text-overflow: ellipsis;
                 overflow: hidden;
+                max-width: 622px;
                 transition: background-color var(--art-transition-duration) ease;
 
                 &:hover {
@@ -68,7 +71,10 @@
 
                     .art-setting-item-right-tooltip {
                         white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
                         color: rgba(255, 255, 255, 0.5);
+                        max-width: 50px;
                     }
 
                     .art-setting-item-right-icon {

@@ -5,6 +5,7 @@ export function getPosFromEvent(art, event) {
     const { left } = $progress.getBoundingClientRect();
     const eventLeft = isMobile ? event.touches[0].clientX : event.clientX;
     const width = clamp(eventLeft - left, 0, $progress.clientWidth);
+    console.log("width:",width,"duration:",art.duration,"left:",left,"eventLeft:",eventLeft);
     const second = (width / $progress.clientWidth) * art.duration;
     const time = secondToTime(second);
     const percentage = clamp(width / $progress.clientWidth, 0, 1);
@@ -19,6 +20,7 @@ export function setCurrentTime(art, event) {
         art.seek = second;
     } else {
         const { second, percentage } = getPosFromEvent(art, event);
+
         art.emit('setBar', 'played', percentage);
         art.seek = second;
     }
@@ -111,6 +113,7 @@ export default function progress(options) {
                 setBar('loaded', art.loaded);
 
                 art.on('setBar', (type, percentage) => {
+                    console.log('progress',percentage);
                     setBar(type, percentage);
                 });
 
@@ -129,6 +132,7 @@ export default function progress(options) {
                 if (!isMobile) {
                     proxy($control, 'click', (event) => {
                         if (event.target !== $indicator) {
+                            console.log("clickEvent",event);
                             setCurrentTime(art, event);
                         }
                     });

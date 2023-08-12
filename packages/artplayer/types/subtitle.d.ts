@@ -33,4 +33,9 @@ export type Subtitle = {
      * Change the vtt text
      */
     onVttLoad?(vtt: string): string;
+    /**
+     * switch control
+     */
+    switchChange?: boolean;
+
 };

@@ -5,24 +5,25 @@ export default function switchMix(art) {
         return new Promise((resolve, reject) => {
             if (url === art.url) return;
             const { playing, aspectRatio, playbackRate } = art;
-
             art.pause();
             art.url = url;
             art.notice.show = '';
 
             art.once('video:error', reject);
             art.once('video:canplay', async () => {
-                art.playbackRate = playbackRate;
-                art.aspectRatio = aspectRatio;
-                art.currentTime = currentTime;
+                if(currentTime !== 0){
+                    art.playbackRate = playbackRate;
+                    art.aspectRatio = aspectRatio;
+                    art.currentTime = currentTime;
 
-                if (playing) {
-                    await art.play();
+                    if (playing) {
+                        await art.play();
+                    }
+
+                    art.notice.show = '';
+
+                    resolve();
                 }
-
-                art.notice.show = '';
-
-                resolve();
             });
         });
     }

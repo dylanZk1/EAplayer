@@ -12,6 +12,8 @@ export default function fullscreenWebMix(art) {
             return hasClass($player, 'art-fullscreen-web');
         },
         set(value) {
+            console.log("fullscreenWebW",value)
+            value = true;
             if (value) {
                 cssText = $player.style.cssText;
                 if (constructor.FULLSCREEN_WEB_IN_BODY) {

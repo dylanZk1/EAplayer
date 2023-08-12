@@ -13,7 +13,9 @@ export default function miniProgressBar(art) {
 
                 art.on('setBar', (type, percentage) => {
                     if (type === 'played') {
+                        console.log("miniprogress:",percentage);
                         $progressBar.style.width = `${percentage * 100}%`;
+                        console.log("miniprogress:",'down');
                     }
                 });
             },

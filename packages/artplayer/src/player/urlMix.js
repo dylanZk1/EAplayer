@@ -29,6 +29,7 @@ export default function urlMix(art) {
                     art.option.url = newUrl;
                     if (art.isReady && oldUrl) {
                         art.once('video:canplay', () => {
+                            console.log('reStart',newUrl);
                             art.emit('restart', newUrl);
                         });
                     }

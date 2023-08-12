@@ -30,11 +30,11 @@ export default class Template {
     static get html() {
         return `
           <div class="art-video-player art-subtitle-show art-layer-show art-control-show art-mask-show">
-            <video class="art-video">
+            <video class="art-video" id='artplayerVideo'>
               <track default kind="metadata" src=""></track>
             </video>
             <div class="art-poster"></div>
-            <div class="art-subtitle"></div>
+            <div class="art-subtitle" id="art-subtitle"></div>
             <div class="art-danmuku"></div>
             <div class="art-layers"></div>
             <div class="art-mask">

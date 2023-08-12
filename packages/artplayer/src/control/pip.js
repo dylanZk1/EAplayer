@@ -11,6 +11,7 @@ export default function pip(option) {
 
             proxy($control, 'click', () => {
                 art.pip = !art.pip;
+                art.fullscreenWeb = true
             });
 
             art.on('pip', (value) => {
