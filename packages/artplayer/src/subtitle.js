@@ -157,13 +157,15 @@ export default class Subtitle extends Component {
                         const vttNew = subtitleOption.onVttLoad(vtt);
                         return vttToBlob(vttNew);
                     }
-                    case 'ass':
-                    case 'lrc':{
+                    case 'ass':{
                         return 'xxx';
-                        // const vtt = assToVtt(text);
-                        // const vttNew = subtitleOption.onVttLoad(vtt);
-                        // return vttToBlob(vttNew);
                     }
+                    // case 'lrc':{
+                    //     return 'xxx';
+                    //     // const vtt = assToVtt(text);
+                    //     // const vttNew = subtitleOption.onVttLoad(vtt);
+                    //     // return vttToBlob(vttNew);
+                    // }
                     case 'vtt': {
                         const vttNew = subtitleOption.onVttLoad(text);
                         return vttToBlob(vttNew);

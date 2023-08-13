@@ -9,8 +9,8 @@ export default function switchMix(art) {
             art.url = url;
             art.notice.show = '';
 
-            art.once('video:error', reject);
-            art.once('video:canplay', async () => {
+            art.on('video:error', reject);
+            art.on('video:canplay', async () => {
                 if(currentTime !== 0){
                     art.playbackRate = playbackRate;
                     art.aspectRatio = aspectRatio;

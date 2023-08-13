@@ -54,9 +54,11 @@ export default function eventInit(art) {
             art.play();
             art.controls.show = false;
             art.mask.show = false;
+            art.emit('changeTaskProgress',0.01);
         } else {
             art.controls.show = true;
             art.mask.show = true;
+            art.emit('changeTaskProgress',-1);
         }
     });
 
@@ -74,7 +76,7 @@ export default function eventInit(art) {
             addClass($player, 'art-error');
             await sleep(constructor.RECONNECT_SLEEP_TIME);
             notice.show = i18n.get('Video Load Failed');
-            art.destroy(false);
+            // art.destroy(false);   //electron为单例开发，除非程序崩溃，否则art对象不会销毁
         }
     });
 
@@ -95,11 +97,13 @@ export default function eventInit(art) {
         art.loading.show = true;
         art.mask.show = false;
         art.controls.show = true;
+        art.emit('changeThumbar','loadstart');
     });
 
     art.on('video:pause', () => {
         art.controls.show = true;
         art.mask.show = true;
+        art.emit('changeThumbar','play');
     });
 
     art.on('video:play', () => {
@@ -109,6 +113,7 @@ export default function eventInit(art) {
 
     art.on('video:playing', () => {
         art.mask.show = false;
+        art.emit('changeThumbar','pause');
     });
 
     art.on('video:progress', () => {
@@ -149,5 +154,6 @@ export default function eventInit(art) {
     art.on('video:waiting', () => {
         art.loading.show = true;
         art.mask.show = false;
+        art.emit('changeThumbar','waiting');
     });
 }

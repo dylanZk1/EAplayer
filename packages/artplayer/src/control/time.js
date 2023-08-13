@@ -1,4 +1,4 @@
-import { secondToTime, isMobile } from '../utils';
+import { secondToTime, isMobile, debounce} from '../utils';
 
 export default function time(option) {
     return (art) => ({
@@ -13,11 +13,20 @@ export default function time(option) {
                   padding: '0 10px',
               },
         mounted: ($control) => {
-            function getTime() {
+            async function getTime() {
                 const newTime = `${secondToTime(art.currentTime)} / ${secondToTime(art.duration)}`;
                 if (newTime !== $control.innerText) {
                     $control.innerText = newTime;
+                    const timepercentage = (art.currentTime)/(art.duration);
+                    let change = debounce(async (percentage) => {
+                        await changeTaskProgress(percentage);
+                    },500);
+                    await change(timepercentage>=0.01?timepercentage:0.01);
                 }
+            }
+
+            async function changeTaskProgress(percentage){
+                art.emit('changeTaskProgress',percentage);
             }
 
             getTime();

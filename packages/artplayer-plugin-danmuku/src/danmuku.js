@@ -39,6 +39,7 @@ export default class Danmuku {
         art.on('video:waiting', this.stop);
         art.on('resize', this.reset);
         art.on('destroy', this.destroy);
+        art.on('timeupdate',this.start);
 
         this.load();
     }
@@ -448,12 +449,11 @@ export default class Danmuku {
     }
 
     show() {
-        if(this.art.plugins.artplayerPluginDanmuku.option.danmuku !== ''){
-            this.isHide = false;
-            this.start();
-            this.$danmuku.style.display = 'block';
-            this.art.emit('artplayerPluginDanmuku:show');
-        }
+        console.log("danmu",this.art.plugins.artplayerPluginDanmuku.option.danmuku.trim() !== '');
+        this.isHide = false;
+        this.start();
+        this.$danmuku.style.display = 'block';
+        this.art.emit('artplayerPluginDanmuku:show');
         return this;
     }
 
