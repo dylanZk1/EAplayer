@@ -44,6 +44,10 @@ export default class Component {
         this.show = !this.show;
     }
 
+    changeState(state) {
+        this.show = state;
+    }
+
     add(getOption) {
         const option = typeof getOption === 'function' ? getOption(this.art) : getOption;
         option.html = option.html || '';

@@ -35,11 +35,17 @@ export default class Danmuku {
 
         art.on('video:play', this.start);
         art.on('video:playing', this.start);
-        art.on('video:pause', this.stop);
-        art.on('video:waiting', this.stop);
+        art.on('video:pause', ()=>{
+            console.log('video:pause');
+            this.stop();
+        });
+        art.on('video:waiting', ()=>{
+            console.log('video:waiting');
+            this.stop();
+        });
         art.on('resize', this.reset);
         art.on('destroy', this.destroy);
-        art.on('timeupdate',this.start);
+        art.on('timeupdate',this.show);
 
         this.load();
     }
@@ -324,6 +330,7 @@ export default class Danmuku {
     suspend() {
         const { clientWidth } = this.$player;
         this.filter('emit', (danmu) => {
+            console.log('suspend');
             danmu.$state = 'stop';
             switch (danmu.mode) {
                 case 0: {
@@ -449,7 +456,6 @@ export default class Danmuku {
     }
 
     show() {
-        console.log("danmu",this.art.plugins.artplayerPluginDanmuku.option.danmuku.trim() !== '');
         this.isHide = false;
         this.start();
         this.$danmuku.style.display = 'block';
@@ -463,6 +469,7 @@ export default class Danmuku {
         this.queue.forEach((item) => this.makeWait(item));
         this.$danmuku.style.display = 'none';
         this.art.emit('artplayerPluginDanmuku:hide');
+        console.log('hideDan');
         return this;
     }
 

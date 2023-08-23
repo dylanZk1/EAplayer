@@ -161,7 +161,9 @@ export default class Setting extends Component {
         append($icon, icons.arrowLeft);
         append($left, $icon);
         append($left, item.$parentItem.html);
-        const event = proxy($item, 'click', () => this.render(item.$parentList));
+        const event = proxy($item, 'click', () => {
+            this.render(item.$parentList);
+        });
         this.events.push(event);
         return $item;
     }

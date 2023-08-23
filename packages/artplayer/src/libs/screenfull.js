@@ -57,14 +57,6 @@ var CurrentMode = {
     Exit:0,
 }
 
-// function changeCurrentModeEnter(enterMode){
-//     CurrentMode.Enter = enterMode;
-// }
-//
-// function changeCurrentModeExit(exitMode){
-//     CurrentMode.Exit = exitMode;
-// }
-
 function isExitModeExist(){
     return CurrentMode;
 }

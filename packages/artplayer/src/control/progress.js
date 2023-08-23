@@ -5,7 +5,6 @@ export function getPosFromEvent(art, event) {
     const { left } = $progress.getBoundingClientRect();
     const eventLeft = isMobile ? event.touches[0].clientX : event.clientX;
     const width = clamp(eventLeft - left, 0, $progress.clientWidth);
-    console.log("width:",width,"duration:",art.duration,"left:",left,"eventLeft:",eventLeft);
     const second = (width / $progress.clientWidth) * art.duration;
     const time = secondToTime(second);
     const percentage = clamp(width / $progress.clientWidth, 0, 1);

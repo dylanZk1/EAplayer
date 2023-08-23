@@ -109,11 +109,13 @@ export default function eventInit(art) {
     art.on('video:play', () => {
         art.mask.show = false;
         setStyle($poster, 'display', 'none');
+        art.emit('changeMediaTitle','EAPlayer');
     });
 
     art.on('video:playing', () => {
         art.mask.show = false;
         art.emit('changeThumbar','pause');
+        art.emit('changeMediaTitle',art.option.initurl);
     });
 
     art.on('video:progress', () => {
@@ -150,6 +152,11 @@ export default function eventInit(art) {
     // art.on('video:volumechange', () => {
 
     // });
+
+    art.on('video:error',()=>{
+        art.playertitle('');
+        art.emit('changeMediaTitle','');
+    })
 
     art.on('video:waiting', () => {
         art.loading.show = true;

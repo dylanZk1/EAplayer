@@ -34,6 +34,7 @@ function nativePip(art) {
     });
 
     proxy($video, 'leavepictureinpicture', () => {
+        art.template.$player.focus();
         art.emit('pip', false);
     });
 }

@@ -21,6 +21,7 @@ import Icons from './icons';
 import Setting from './setting';
 import Storage from './storage';
 import Plugins from './plugins';
+import Title from './title';
 
 let id = 0;
 const instances = [];
@@ -51,6 +52,7 @@ export default class Artplayer extends Emitter {
         this.player = new Player(this);
         this.layers = new Layer(this);
         this.controls = new Control(this);
+        this.title = new Title(this);
         this.contextmenu = new Contextmenu(this);
         this.subtitle = new Subtitle(this);
         this.info = new Info(this);
@@ -205,6 +207,7 @@ export default class Artplayer extends Emitter {
     destroy(removeHtml = true) {
         this.events.destroy();
         this.template.destroy(removeHtml);
+        this.setting
         instances.splice(instances.indexOf(this), 1);
         this.isDestroy = true;
         this.emit('destroy');

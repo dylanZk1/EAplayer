@@ -1,0 +1,24 @@
+.art-video-player {
+    .art-header{
+        .art-full(70);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        opacity: 0;
+        overflow: hidden;
+        pointer-events: none;
+        gap: var(--art-bottom-gap);
+        padding: 0 var(--art-padding);
+        transition: opacity var(--art-transition-duration) ease;
+        background-size: 100% var(--art-bottom-height);
+        .art-top-gradient();
+        .art-title;
+    }
+    &.art-control-show,
+    &.art-hover{
+        .art-header{
+            opacity: 1;
+            .art-title;
+        }
+    }
+}

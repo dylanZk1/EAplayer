@@ -21,9 +21,19 @@ export type Option = {
     container: string | HTMLDivElement;
 
     /**
-     * Video url
+     * Video url(blob)
      */
     url: string;
+
+    /**
+     * Video url(no blob)
+     */
+    initurl:string;
+
+    /**
+     * player title
+     */
+    playerTitle:string
 
     /**
      * Video poster image url
