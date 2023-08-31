@@ -1,8 +1,8 @@
 {
-    "name": "artplayer-packages",
-    "version": "5.0.0",
+    "name": "EAPlayer",
+    "version": "1.0.0",
     "type": "module",
-    "description": "ArtPlayer.js is a modern and full featured HTML5 video player",
+    "description": "EAPlayer is an electron video player based on ArtPlayer.js",
     "scripts": {
         "build:all": "npm run build all && npm run build:sw && npm run build:ts && npm run build:docs",
         "bootstrap": "npx lerna bootstrap --hoist",
@@ -17,19 +17,19 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/zhw2590582/ArtPlayer.git"
+        "url": "git+https://github.com/dylanZk1/EAplayer.git"
     },
     "keywords": [
         "video",
-        "player"
+        "player",
+        "electron"
     ],
-    "author": "Harvey Zack <laozhaochaguan@gmail.com>",
+    "author": "Rudolf Lee <q8w240@gmail.com>",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/zhw2590582/ArtPlayer/issues"
+        "url": "https://github.com/dylanZk1/EAplayer/issues"
     },
-    "homepage": "https://artplayer.org",
-    "browserslist": "last 1 Chrome version",
+    "browserslist": "Electron",
     "dependencies": {
         "@babel/eslint-parser": "^7.21.8",
         "@babel/preset-react": "^7.18.6",
