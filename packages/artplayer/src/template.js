@@ -35,7 +35,7 @@ export default class Template {
             </video>
             <div class="art-poster"></div>
             <div class='art-header'>
-                <p class='art-title'></p>
+                <div class='art-title'></div>
             </div>
             <div class="art-subtitle" id="art-subtitle"></div>
             <div class="art-danmuku"></div>

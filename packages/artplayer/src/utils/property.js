@@ -5,6 +5,10 @@ export function has(obj, name) {
     return hasOwnProperty.call(obj, name);
 }
 
+export function hasProtoType(obj,prototype){
+    return hasOwnProperty.hasOwnProperty.call(obj,prototype);
+}
+
 export function get(obj, name) {
     return Object.getOwnPropertyDescriptor(obj, name);
 }

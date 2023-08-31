@@ -1,6 +1,7 @@
 import { secondToTime, setStyle, query, append } from '../utils';
 
 export default function autoPlayback(art) {
+
     const {
         i18n,
         icons,
@@ -23,6 +24,53 @@ export default function autoPlayback(art) {
     const $jump = query('.art-auto-playback-jump', $autoPlayback);
     const $close = query('.art-auto-playback-close', $autoPlayback);
 
+    const onceAction = (fn)=>{
+        let result;
+        return function(...args) {
+            if(fn) {
+                result = fn.apply(this, args);
+                fn = null;
+            }
+            return result;
+        };
+    }
+
+    const tmp = onceAction(()=>{
+        append($close, icons.close);
+    });
+
+    const autoPlaybackToggle = ()=>{
+        {
+            console.log("autoPlaybackToggle");
+            const times = storage.get('times') || {};
+            const currentTime = times[art.option.id || art.option.url];
+            if (currentTime && currentTime >= constructor.AUTO_PLAYBACK_MIN) {
+                tmp();
+                setStyle($autoPlayback, 'display', 'flex');
+
+                $last.innerText = `${i18n.get('Last Seen')} ${secondToTime(currentTime)}`;
+                $jump.innerText = i18n.get('Jump Play');
+
+                proxy($close, 'click', () => {
+                    setStyle($autoPlayback, 'display', 'none');
+                });
+
+                proxy($jump, 'click', () => {
+                    art.seek = currentTime;
+                    art.play();
+                    setStyle($poster, 'display', 'none');
+                    setStyle($autoPlayback, 'display', 'none');
+                });
+
+                art.once('video:timeupdate', () => {
+                    setTimeout(() => {
+                        setStyle($autoPlayback, 'display', 'none');
+                    }, constructor.AUTO_PLAYBACK_TIMEOUT);
+                });
+            }
+        }
+    }
+
     art.on('video:timeupdate', () => {
         if (art.playing) {
             const times = storage.get('times') || {};
@@ -35,33 +83,12 @@ export default function autoPlayback(art) {
         }
     });
 
-    art.on('ready', () => {
-        const times = storage.get('times') || {};
-        const currentTime = times[art.option.id || art.option.url];
-        if (currentTime && currentTime >= constructor.AUTO_PLAYBACK_MIN) {
-            append($close, icons.close);
-            setStyle($autoPlayback, 'display', 'flex');
-
-            $last.innerText = `${i18n.get('Last Seen')} ${secondToTime(currentTime)}`;
-            $jump.innerText = i18n.get('Jump Play');
-
-            proxy($close, 'click', () => {
-                setStyle($autoPlayback, 'display', 'none');
-            });
-
-            proxy($jump, 'click', () => {
-                art.seek = currentTime;
-                art.play();
-                setStyle($poster, 'display', 'none');
-                setStyle($autoPlayback, 'display', 'none');
-            });
-
-            art.once('video:timeupdate', () => {
-                setTimeout(() => {
-                    setStyle($autoPlayback, 'display', 'none');
-                }, constructor.AUTO_PLAYBACK_TIMEOUT);
-            });
-        }
+    art.on('ready', ()=>{
+        autoPlaybackToggle();
+        i++;
+    });
+    art.on('autoPlaybackToggle',()=>{
+        autoPlaybackToggle();
     });
 
     return {

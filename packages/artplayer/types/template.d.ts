@@ -2,7 +2,7 @@ export type Template = {
     readonly $container: HTMLDivElement;
     readonly $original: HTMLDivElement;
     readonly $player: HTMLDivElement;
-    readonly $title: HTMLParagraphElement;
+    readonly $title: HTMLDivElement;
     readonly $header: HTMLDivElement;
     readonly $video: HTMLVideoElement;
     readonly $track: HTMLTrackElement;

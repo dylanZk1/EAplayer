@@ -31,6 +31,11 @@ export type Option = {
     initurl:string;
 
     /**
+     * mediaType
+     */
+    mediaInfo: any;
+
+    /**
      * player title
      */
     playerTitle:string

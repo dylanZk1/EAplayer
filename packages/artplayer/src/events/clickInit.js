@@ -30,6 +30,7 @@ export default function clickInit(art, events) {
             } else {
                 if (DBCLICK_FULLSCREEN) {
                     art.fullscreen = !art.fullscreen;
+
                 }
             }
         },()=>{

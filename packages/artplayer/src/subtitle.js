@@ -153,13 +153,15 @@ export default class Subtitle extends Component {
                 this.art.emit('subtitleLoad', subtitleOption.url);
                 switch ((this.art.option.subtitle.type || this.art.subtitle.type) || getExt(subtitleOption.url)) {
                     case 'srt': {
-                        this.art.cssVar('--art-subtitle-bottom','35px');
+                        this.art.cssVar('--art-subtitle-bottom',this.art.cssVar('--art-fixed-subtitle-bottom'));
+                        this.art.cssVar('--art-subtitle-font-weight',this.art.cssVar('--art-fixed-subtitle-font-weight'));
                         const vtt = srtToVtt(text);
                         const vttNew = subtitleOption.onVttLoad(vtt);
                         return vttToBlob(vttNew);
                     }
                     case 'ass':{
                         this.art.cssVar('--art-subtitle-bottom','0px');
+                        this.art.cssVar('--art-subtitle-font-weight','normal');
                         return 'xxx';
                     }
                     // case 'lrc':{
@@ -169,7 +171,7 @@ export default class Subtitle extends Component {
                     //     // return vttToBlob(vttNew);
                     // }
                     case 'vtt': {
-                        this.art.cssVar('--art-subtitle-bottom','35px');
+                        this.art.cssVar('--art-subtitle-bottom',this.art.cssVar('--art-fixed-subtitle-bottom'));
                         const vttNew = subtitleOption.onVttLoad(text);
                         return vttToBlob(vttNew);
                     }

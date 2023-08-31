@@ -19,6 +19,7 @@ export default function artplayerPluginHlsQuality(option) {
         checkVersion(art);
 
         const { $video } = art.template;
+        art.plugins
         const { errorHandle } = art.constructor.utils;
 
         function update() {

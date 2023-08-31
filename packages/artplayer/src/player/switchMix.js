@@ -11,11 +11,11 @@ export default function switchMix(art) {
 
             art.on('video:error', reject);
             art.on('video:canplay', async () => {
+                art.emit('autoPlaybackToggle');
                 if(currentTime !== 0){
                     art.playbackRate = playbackRate;
                     art.aspectRatio = aspectRatio;
                     art.currentTime = currentTime;
-
                     if (playing) {
                         await art.play();
                     }
