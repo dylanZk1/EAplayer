@@ -50,6 +50,12 @@ export default function progress(options) {
                 const $indicator = query('.art-progress-indicator', $control);
                 const $tip = query('.art-progress-tip', $control);
 
+                // if(art.duration === 0){
+                //     $control.style.visibility = 'hidden';
+                // }
+                // else{
+                //     $control.style.visibility = 'visible';
+                // }
                 if (icons.indicator) {
                     append($indicator, icons.indicator);
                 } else {

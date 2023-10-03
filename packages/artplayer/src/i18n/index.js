@@ -14,15 +14,15 @@ export default class I18n {
         this.art = art;
 
         this.languages = {
-            'zh-cn': zhCn,
-            'zh-tw': zhTw,
-            pl: pl,
-            cs: cs,
-            es: es,
-            fa: fa,
-            fr: fr,
-            id: id,
-            ru: ru,
+            'zh-cn': zhCn, //中文简体
+            'zh-tw': zhTw, //中文繁体
+            pl: pl, //波兰语
+            cs: cs, //捷克语
+            es: es, //西语
+            fa: fa, //波斯语
+            fr: fr, //法语
+            id: id, //印尼语
+            ru: ru, //俄语
         };
 
         this.update(art.option.i18n);

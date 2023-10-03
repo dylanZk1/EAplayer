@@ -34,7 +34,7 @@ export default class Plugins {
         }
 
         for (let index = 0; index < option.plugins.length; index++) {
-            this.add(option.plugins[index]);
+            console.log(this.add(option.plugins[index]));
         }
     }
 
@@ -46,7 +46,6 @@ export default class Plugins {
         }
         const pluginName = (result && result.name) || plugin.name || `plugin${this.id}`;
         errorHandle(!has(this, pluginName), `Cannot add a plugin that already has the same name: ${pluginName}`);
-        console.log(result);
         def(this, pluginName, {
             value: result,
             configurable:true,

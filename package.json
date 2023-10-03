@@ -29,7 +29,7 @@
     "bugs": {
         "url": "https://github.com/dylanZk1/EAplayer/issues"
     },
-    "browserslist": "Electron",
+    "browserslist": "last 1 Chrome version",
     "dependencies": {
         "@babel/eslint-parser": "^7.21.8",
         "@babel/preset-react": "^7.18.6",

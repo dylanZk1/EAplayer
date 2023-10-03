@@ -1,4 +1,5 @@
 import style from 'bundle-text:./style/index.less';
+import header_t from 'bundle-text:./style/title_header.less';
 import validator from 'option-validator';
 import Emitter from './utils/emitter';
 import * as utils from './utils';
@@ -165,6 +166,8 @@ export default class Artplayer extends Emitter {
             quality: [],
             highlight: [],
             plugins: [],
+            whiteList:[],
+            blackList:[],
             thumbnails: {
                 url: '',
                 number: 60,
@@ -246,12 +249,18 @@ Artplayer.FLIP = ['normal', 'horizontal', 'vertical'];
 Artplayer.FULLSCREEN_WEB_IN_BODY = false;
 
 if (typeof document !== 'undefined') {
-    if (!document.getElementById('artplayer-style')) {
-        const $style = utils.createElement('style');
-        $style.id = 'artplayer-style';
-        $style.textContent = style;
-        document.head.appendChild($style);
-    }
+    const isStyleExist = !!document.getElementById('artplayer-style');
+    console.log(isStyleExist);
+    const $style = utils.createElement('style');
+    $style.id = 'artplayer-style';
+    $style.textContent = style+header_t;
+    document.head.appendChild($style);
+    // if (!isStyleExist) {
+    //     const $style = utils.createElement('style');
+    //     $style.id = 'artplayer-style';
+    //     $style.textContent = style+header_t;
+    //     document.head.appendChild($style);
+    // }
 }
 
 if (typeof window !== 'undefined') {

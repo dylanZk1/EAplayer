@@ -48,62 +48,75 @@ export default class Component {
         this.show = state;
     }
 
+    addList(getOption){
+        let $refList = [];
+        if(Array.isArray(getOption) && getOption.length > 0){
+            for(let k=0; k<getOption.length; k++){
+                $refList.push(this.add(getOption[k]));
+            }
+        }
+        return $refList;
+    }
+
     add(getOption) {
-        const option = typeof getOption === 'function' ? getOption(this.art) : getOption;
-        option.html = option.html || '';
-        validator(option, ComponentOption);
-        if (!this.$parent || !this.name || option.disable) return;
-        const name = option.name || `${this.name}${this.id}`;
-        const item = this.cache.get(name);
-        errorHandle(!item, `Can't add an existing [${name}] to the [${this.name}]`);
+        try{
+            const option = typeof getOption === 'function' ? getOption(this.art) : getOption;
+            option.html = option.html || '';
+            validator(option, ComponentOption);
+            if (!this.$parent || !this.name || option.disable) return;
+            const name = option.name || `${this.name}${this.id}`;
+            const item = this.cache.get(name);
+            errorHandle(!item, `Can't add an existing [${name}] to the [${this.name}]`);
+            this.id += 1;
+            const $ref = createElement('div');
+            addClass($ref, `art-${this.name}`);
+            addClass($ref, `art-${this.name}-${name}`);
 
-        this.id += 1;
-        const $ref = createElement('div');
-        addClass($ref, `art-${this.name}`);
-        addClass($ref, `art-${this.name}-${name}`);
+            const childs = Array.from(this.$parent.children);
+            $ref.dataset.index = option.index || this.id;
+            const nextChild = childs.find((item) => Number(item.dataset.index) >= Number($ref.dataset.index));
+            if (nextChild) {
+                nextChild.insertAdjacentElement('beforebegin', $ref);
+            } else {
+                append(this.$parent, $ref);
+            }
 
-        const childs = Array.from(this.$parent.children);
-        $ref.dataset.index = option.index || this.id;
-        const nextChild = childs.find((item) => Number(item.dataset.index) >= Number($ref.dataset.index));
-        if (nextChild) {
-            nextChild.insertAdjacentElement('beforebegin', $ref);
-        } else {
-            append(this.$parent, $ref);
+            if (option.html) {
+                append($ref, option.html);
+            }
+
+            if (option.style) {
+                setStyles($ref, option.style);
+            }
+
+            if (option.tooltip) {
+                tooltip($ref, option.tooltip);
+            }
+
+            const events = [];
+            if (option.click) {
+                const destroyEvent = this.art.events.proxy($ref, 'click', (event) => {
+                    event.preventDefault();
+                    option.click.call(this.art, this, event);
+                });
+                events.push(destroyEvent);
+            }
+
+            if (option.selector && ['left', 'right'].includes(option.position)) {
+                this.addSelector(option, $ref, events);
+            }
+
+            this[name] = $ref;
+            this.cache.set(name, { $ref, events, option });
+
+            if (option.mounted) {
+                option.mounted.call(this.art, $ref);
+            }
+
+            return $ref;
+        }catch (e) {
+            //todo
         }
-
-        if (option.html) {
-            append($ref, option.html);
-        }
-
-        if (option.style) {
-            setStyles($ref, option.style);
-        }
-
-        if (option.tooltip) {
-            tooltip($ref, option.tooltip);
-        }
-
-        const events = [];
-        if (option.click) {
-            const destroyEvent = this.art.events.proxy($ref, 'click', (event) => {
-                event.preventDefault();
-                option.click.call(this.art, this, event);
-            });
-            events.push(destroyEvent);
-        }
-
-        if (option.selector && ['left', 'right'].includes(option.position)) {
-            this.addSelector(option, $ref, events);
-        }
-
-        this[name] = $ref;
-        this.cache.set(name, { $ref, events, option });
-
-        if (option.mounted) {
-            option.mounted.call(this.art, $ref);
-        }
-
-        return $ref;
     }
 
     addSelector(option, $ref, events) {
@@ -175,9 +188,28 @@ export default class Component {
         remove(item.$ref);
     }
 
+    removeList(getOption){
+        if(Array.isArray(getOption) && getOption.length > 0){
+            for(let k=0; k<getOption.length; k++){
+                this.remove(getOption[k]);
+            }
+        }
+    }
+
     update(option) {
         const item = this.cache.get(option.name);
         if (item) this.remove(option.name);
         return this.add(option);
+    }
+
+    updateList(option){
+        if(Array.isArray(option)){
+            for(let h = 0; h < option.length; h++){
+                const item = this.cache.get(option[h].name);
+                if (item) this.remove(option[h].name);
+            }
+            return this.addList(option);
+        }
+        return [];
     }
 }

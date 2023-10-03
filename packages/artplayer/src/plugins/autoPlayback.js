@@ -1,4 +1,5 @@
 import { secondToTime, setStyle, query, append } from '../utils';
+import cssVarMix from '../player/cssVarMix';
 
 export default function autoPlayback(art) {
 
@@ -41,26 +42,26 @@ export default function autoPlayback(art) {
 
     const autoPlaybackToggle = ()=>{
         {
-            console.log("autoPlaybackToggle");
             const times = storage.get('times') || {};
             const currentTime = times[art.option.id || art.option.url];
             if (currentTime && currentTime >= constructor.AUTO_PLAYBACK_MIN) {
                 tmp();
                 setStyle($autoPlayback, 'display', 'flex');
-
-                $last.innerText = `${i18n.get('Last Seen')} ${secondToTime(currentTime)}`;
-                $jump.innerText = i18n.get('Jump Play');
+                $last.innerText = `${i18n.get('Last Seen')} ${secondToTime(currentTime)}, ${i18n.get('Has Jump')}`;
+                // $jump.innerText = i18n.get('Jump Play');
+                art.seek = currentTime;
+                art.play();
 
                 proxy($close, 'click', () => {
                     setStyle($autoPlayback, 'display', 'none');
                 });
 
-                proxy($jump, 'click', () => {
-                    art.seek = currentTime;
-                    art.play();
-                    setStyle($poster, 'display', 'none');
-                    setStyle($autoPlayback, 'display', 'none');
-                });
+                // proxy($jump, 'click', () => {
+                //     art.seek = currentTime;
+                //     art.play();
+                //     setStyle($poster, 'display', 'none');
+                //     setStyle($autoPlayback, 'display', 'none');
+                // });
 
                 art.once('video:timeupdate', () => {
                     setTimeout(() => {
@@ -84,8 +85,8 @@ export default function autoPlayback(art) {
     });
 
     art.on('ready', ()=>{
+        console.log(art.cssVar('art-poster'));
         autoPlaybackToggle();
-        i++;
     });
     art.on('autoPlaybackToggle',()=>{
         autoPlaybackToggle();

@@ -29,13 +29,13 @@ export default function fullscreenMix(art) {
         if(mode!==0){
             EnterMode.mode = mode
         }
-    })
+    });
 
     art.on('exitMode',(mode)=>{
         if(mode!==0){
             ExitMode.mode = mode;
         }
-    })
+    });
 
     const nativeScreenfull = (art) => {
 

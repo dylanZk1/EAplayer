@@ -1,4 +1,5 @@
-import { isMobile } from './utils';
+import { isMobile,debounce } from './utils';
+
 
 export default class Hotkey {
     constructor(art) {
@@ -51,10 +52,13 @@ export default class Hotkey {
                     const events = this.keys[event.keyCode];
                     if (events) {
                         event.preventDefault();
-                        for (let index = 0; index < events.length; index++) {
-                            events[index].call(this.art, event);
-                        }
-                        this.art.emit('hotkey', event);
+                        const hotkeyOp = debounce(()=>{
+                            for (let index = 0; index < events.length; index++) {
+                                events[index].call(this.art, event);
+                            }
+                            this.art.emit('hotkey', event);
+                        },150);
+                        hotkeyOp();
                     }
                 }
             }

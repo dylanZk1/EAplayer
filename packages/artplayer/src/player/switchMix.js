@@ -10,8 +10,10 @@ export default function switchMix(art) {
             art.notice.show = '';
 
             art.on('video:error', reject);
-            art.on('video:canplay', async () => {
+            art.on('video:durationchange', async () =>{
                 art.emit('autoPlaybackToggle');
+            });
+            art.on('video:canplay', async () => {
                 if(currentTime !== 0){
                     art.playbackRate = playbackRate;
                     art.aspectRatio = aspectRatio;

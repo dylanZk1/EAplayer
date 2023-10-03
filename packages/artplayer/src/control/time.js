@@ -15,9 +15,14 @@ export default function time(option) {
         mounted: ($control) => {
             async function getTime() {
                 const newTime = `${secondToTime(art.currentTime)} / ${secondToTime(art.duration)}`;
+                const liveTime = `${secondToTime(art.currentTime)}`;
                 if (newTime !== $control.innerText) {
-                    $control.innerText = newTime;
-                    const timepercentage = (art.currentTime)/(art.duration);
+                    if(art.duration === 0){
+                        $control.innerText = liveTime;
+                    }else{
+                        $control.innerText = newTime;
+                    }
+                    const timepercentage = art.duration !== 0?(art.currentTime)/(art.duration):1;
                     let change = debounce(async (percentage) => {
                         await changeTaskProgress(percentage);
                     },500);

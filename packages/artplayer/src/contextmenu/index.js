@@ -13,6 +13,8 @@ export default class Contextmenu extends Component {
 
         this.name = 'contextmenu';
         this.$parent = art.template.$contextmenu;
+        this.menuList = [];
+        this.customMenuList = [];
 
         if (!isMobile) {
             this.init();
@@ -27,59 +29,88 @@ export default class Contextmenu extends Component {
         } = this.art;
 
         if (option.playbackRate) {
-            this.add(
-                playbackRate({
-                    name: 'playbackRate',
-                    index: 10,
-                }),
-            );
+            this.menuList.push(playbackRate({
+                name: 'playbackRate',
+                index: 10,
+            }));
+            // this.add(
+            //     playbackRate({
+            //         name: 'playbackRate',
+            //         index: 10,
+            //     }),
+            // );
         }
 
         if (option.aspectRatio) {
-            this.add(
-                aspectRatio({
-                    name: 'aspectRatio',
-                    index: 20,
-                }),
-            );
+            this.menuList.push(aspectRatio({
+                name: 'aspectRatio',
+                index: 20,
+            }));
+            // this.add(
+            //     aspectRatio({
+            //         name: 'aspectRatio',
+            //         index: 20,
+            //     }),
+            // );
         }
 
         if (option.flip) {
-            this.add(
-                flip({
-                    name: 'flip',
-                    index: 30,
-                }),
-            );
+            this.menuList.push(flip({
+                name: 'flip',
+                index: 30,
+            }));
+            // this.add(
+            //     flip({
+            //         name: 'flip',
+            //         index: 30,
+            //     }),
+            // );
         }
 
-        this.add(
-            info({
-                name: 'info',
-                index: 40,
-            }),
-        );
+        this.menuList.push(info({
+            name: 'info',
+            index: 40,
+        }));
+        // this.add(
+        //     info({
+        //         name: 'info',
+        //         index: 40,
+        //     }),
+        // );
 
-        this.add(
-            version({
-                name: 'version',
-                index: 50,
-            }),
-        );
+        this.menuList.push(version({
+            name: 'version',
+            index: 50,
+        }));
+        // this.add(
+        //     version({
+        //         name: 'version',
+        //         index: 50,
+        //     }),
+        // );
 
-        this.add(
-            close({
-                name: 'close',
-                index: 60,
-            }),
-        );
+        this.menuList.push(close({
+            name: 'close',
+            index: 60,
+        }));
+        // this.add(
+        //     close({
+        //         name: 'close',
+        //         index: 60,
+        //     }),
+        // );
 
         for (let index = 0; index < option.contextmenu.length; index++) {
-            this.add(option.contextmenu[index]);
+            this.menuList.push(option.contextmenu[index]);
+            // this.add(option.contextmenu[index]);
         }
 
+        this.addList(this.menuList);
+
         proxy($player, 'contextmenu', (event) => {
+            console.log("context",$contextmenu);
             event.preventDefault();
+
             if (!this.art.constructor.CONTEXTMENU) return;
 
             this.show = true;

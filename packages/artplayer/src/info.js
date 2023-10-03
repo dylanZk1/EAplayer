@@ -26,10 +26,17 @@ export default class Info extends Component {
         const $types = queryAll('[data-video]', $infoPanel) || [];
         this.art.on('destroy', () => clearTimeout(timer));
 
+        function VideoinfoHandler(property){
+            if(property === 'src' && window.urlcode.urldecode){
+                return window.urlcode.urldecode($video['src']);
+            }
+            return $video[property];
+        }
+
         function loop() {
             for (let index = 0; index < $types.length; index++) {
                 const item = $types[index];
-                const value = $video[item.dataset.video];
+                const value = VideoinfoHandler(item.dataset.video);
                 const innerText = typeof value === 'number' ? value.toFixed(2) : value;
                 if (item.innerText !== innerText) {
                     item.innerText = innerText;

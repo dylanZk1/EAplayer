@@ -1,4 +1,4 @@
-import { includeFromEvent, isMobile } from '../utils';
+import { includeFromEvent, includeFromEventGroup, isMobile } from '../utils';
 import { DBCLICK_TIME } from 'artplayer';
 
 export default function clickInit(art, events) {
@@ -8,8 +8,8 @@ export default function clickInit(art, events) {
     } = art;
 
     events.proxy(document, ['click', 'contextmenu'], (event) => {
-        if (includeFromEvent(event, $player)) {
-            art.isInput = event.target.tagName === 'INPUT';
+        if (includeFromEvent(event, $player) || (window.titleBar && includeFromEvent(event, window.titleBar))) {
+            art.isInput = event.target.tagName.toUpperCase() === 'INPUT';
             art.isFocus = true;
             art.emit('focus', event);
         } else {
@@ -30,7 +30,6 @@ export default function clickInit(art, events) {
             } else {
                 if (DBCLICK_FULLSCREEN) {
                     art.fullscreen = !art.fullscreen;
-
                 }
             }
         },()=>{
@@ -59,7 +58,8 @@ export default function clickInit(art, events) {
                 return
             }
             timer = setTimeout((...args) => {
-                singleclick.apply(this, args)
+                singleclick.apply(this, args);
+                doubleclick();
                 timer = null
             }, delay)
         }

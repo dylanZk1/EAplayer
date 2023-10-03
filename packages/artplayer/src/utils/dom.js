@@ -79,6 +79,15 @@ export function includeFromEvent(event, target) {
     return event.composedPath && event.composedPath().indexOf(target) > -1;
 }
 
+export function includeFromEventGroup(event, ...target){
+    for(let i = 0; i < target.length; i++){
+        if(includeFromEvent(event,target[i])){
+            return true;
+        }
+    }
+    return false;
+}
+
 export function replaceElement(newChild, oldChild) {
     oldChild.parentNode.replaceChild(newChild, oldChild);
     return newChild;

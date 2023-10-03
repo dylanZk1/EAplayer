@@ -30,6 +30,7 @@ export default function artplayerPluginHlsQuality(option) {
             const getResolution = option.getResolution || ((level) => (level.height || 'Unknown ') + 'P');
             const defaultLevel = hls.levels[hls.currentLevel];
             const defaultHtml = defaultLevel ? getResolution(defaultLevel) : auto;
+            console.log("default",defaultHtml);
 
             if (option.control) {
                 art.controls.update({
