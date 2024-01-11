@@ -138,6 +138,7 @@ export default class Contextmenu extends Component {
 
         proxy($player, 'click', (event) => {
             if (!includeFromEvent(event, $contextmenu)) {
+                this.art.emit('contextMenuHover',this.show)
                 this.show = false;
             }
         });

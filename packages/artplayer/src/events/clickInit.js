@@ -7,6 +7,13 @@ export default function clickInit(art, events) {
         template: { $player, $video },
     } = art;
 
+    // eslint-disable-next-line no-unused-vars
+    let menuContext = false;
+
+    art.on('contextMenuHover',(ismenu)=>{
+        menuContext = ismenu;
+    })
+
     events.proxy(document, ['click', 'contextmenu'], (event) => {
         if (includeFromEvent(event, $player) || (window.titleBar && includeFromEvent(event, window.titleBar))) {
             art.isInput = event.target.tagName.toUpperCase() === 'INPUT';
@@ -39,7 +46,11 @@ export default function clickInit(art, events) {
                     art.toggle();
                 }
             } else {
-                art.toggle();
+                if(menuContext){
+                    art.toggle();
+                    menuContext = false;
+                }
+
             }
         });
         click1();

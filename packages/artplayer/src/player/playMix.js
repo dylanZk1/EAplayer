@@ -15,6 +15,13 @@ export default function playMix(art) {
             // notice.show = i18n.get('Play');
             art.emit('play');
 
+            if($video.captureStream()){
+                let streamAudios = $video.captureStream().getAudioTracks();
+                streamAudios.map(function(item) {
+                    console.log("音轨label:",item.label);
+                });
+            }
+
             if (option.mutex) {
                 for (let index = 0; index < instances.length; index++) {
                     const instance = instances[index];

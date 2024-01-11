@@ -1,20 +1,20 @@
 {
     "license": "MIT",
-    "name": "artplayer",
+    "name": "eaplayer",
     "version": "5.0.9",
     "main": "dist/artplayer.js",
     "legacy": "dist/artplayer.legacy.js",
     "types": "types/artplayer.d.ts",
     "homepage": "https://artplayer.org",
-    "author": "Harvey Zack <laozhaochaguan@gmail.com>",
+    "author": "Rudolf <q8w240@gmail.com>",
     "browserslist": "last 1 Chrome version",
     "description": "ArtPlayer.js is a modern and full featured HTML5 video player",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/zhw2590582/ArtPlayer.git"
+        "url": "git+https://github.com/dylanZk1/EAplayer.git"
     },
     "bugs": {
-        "url": "https://github.com/zhw2590582/ArtPlayer/issues"
+        "url": "https://github.com/dylanZk1/EAplayer/issues"
     },
     "keywords": [
         "html5",

@@ -1,44 +1,79 @@
-import { secondToTime, download, def, createElement } from '../utils';
+import { def, download, secondToTime } from '../utils';
+import html2canvas from 'html2canvas';
 
 export default function screenshotMix(art) {
     const {
         notice,
-        template: { $video },
+        template: { $video, $player, $subtitle },
     } = art;
 
-    const $canvas = createElement('canvas');
+    // const $canvas = createElement('canvas');
 
-    def(art, 'getDataURL', {
-        value: () =>
+    def(art,'getDataURL',{
+        value:() =>
             new Promise((resolve, reject) => {
                 try {
-                    $canvas.width = $video.videoWidth;
-                    $canvas.height = $video.videoHeight;
-                    $canvas.getContext('2d').drawImage($video, 0, 0);
-                    resolve($canvas.toDataURL('image/png'));
-                } catch (err) {
-                    notice.show = err;
-                    reject(err);
-                }
-            }),
-    });
-
-    def(art, 'getBlobUrl', {
-        value: () =>
-            new Promise((resolve, reject) => {
-                try {
-                    $canvas.width = $video.videoWidth;
-                    $canvas.height = $video.videoHeight;
-                    $canvas.getContext('2d').drawImage($video, 0, 0);
-                    $canvas.toBlob((blob) => {
-                        resolve(URL.createObjectURL(blob));
+                    html2canvas($player, {
+                        useCORS: true,
+                        allowTaint: false,
+                    }).then(canvas=>{
+                        resolve(canvas.toDataURL('image/png'));
                     });
                 } catch (err) {
                     notice.show = err;
                     reject(err);
                 }
             }),
+    })
+
+    def(art, 'getBlobUrl', {
+        value: () =>
+            new Promise((resolve, reject) => {
+                try {
+                    html2canvas($player, { useCORS: true }).then(canvas=>{
+                        canvas.toBlob((blob) => {
+                            resolve(URL.createObjectURL(blob));
+                        })
+                    })
+                } catch (err) {
+                    notice.show = err;
+                    reject(err);
+                }
+            }),
     });
+
+    // def(art, 'getDataURL', {
+    //     value: () =>
+    //         new Promise((resolve, reject) => {
+    //             try {
+    //                 $canvas.width = $video.videoWidth;
+    //                 $canvas.height = $video.videoHeight;
+    //                 // $canvas.getContext('2d').drawImage($video, 0, 0);
+    //                 $canvas.getContext('2d').drawImage($player, 0, 0);
+    //                 resolve($canvas.toDataURL('image/png'));
+    //             } catch (err) {
+    //                 notice.show = err;
+    //                 reject(err);
+    //             }
+    //         }),
+    // });
+
+    // def(art, 'getBlobUrl', {
+    //     value: () =>
+    //         new Promise((resolve, reject) => {
+    //             try {
+    //                 $canvas.width = $video.videoWidth;
+    //                 $canvas.height = $video.videoHeight;
+    //                 $canvas.getContext('2d').drawImage($video, 0, 0);
+    //                 $canvas.toBlob((blob) => {
+    //                     resolve(URL.createObjectURL(blob));
+    //                 });
+    //             } catch (err) {
+    //                 notice.show = err;
+    //                 reject(err);
+    //             }
+    //         }),
+    // });
 
     def(art, 'screenshot', {
         value: async () => {

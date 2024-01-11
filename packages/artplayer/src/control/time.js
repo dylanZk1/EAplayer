@@ -17,7 +17,7 @@ export default function time(option) {
                 const newTime = `${secondToTime(art.currentTime)} / ${secondToTime(art.duration)}`;
                 const liveTime = `${secondToTime(art.currentTime)}`;
                 if (newTime !== $control.innerText) {
-                    if(art.duration === 0){
+                    if(art.duration === 0 && art.playing){
                         $control.innerText = liveTime;
                     }else{
                         $control.innerText = newTime;

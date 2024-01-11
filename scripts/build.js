@@ -53,8 +53,8 @@ async function build(name, targetName) {
     const banner =
         '/*!\n' +
         ` * ${name}.js v${version}\n` +
-        ` * Github: https://github.com/zhw2590582/ArtPlayer\n` +
-        ` * (c) 2017-${new Date().getFullYear()} Harvey Zack\n` +
+        ` * Github: https://github.com/dylanZk1/EAplayer\n` +
+        ` * (c) 2022-${new Date().getFullYear()} Rudolf\n` +
         ' * Released under the MIT License.\n' +
         ' */\n';
 

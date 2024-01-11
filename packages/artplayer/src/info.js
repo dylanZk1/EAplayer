@@ -1,4 +1,4 @@
-import { queryAll, isMobile } from './utils';
+import { queryAll, isMobile, dragElement } from './utils';
 import Component from './utils/component';
 
 export default class Info extends Component {
@@ -15,7 +15,7 @@ export default class Info extends Component {
         const {
             proxy,
             constructor,
-            template: { $infoPanel, $infoClose, $video },
+            template: { $info, $infoPanel, $infoClose, $video },
         } = this.art;
 
         proxy($infoClose, 'click', () => {
@@ -25,6 +25,10 @@ export default class Info extends Component {
         let timer = null;
         const $types = queryAll('[data-video]', $infoPanel) || [];
         this.art.on('destroy', () => clearTimeout(timer));
+        $info.addEventListener('selectstart',()=>{
+            return false;
+        })
+
 
         function VideoinfoHandler(property){
             if(property === 'src' && window.urlcode.urldecode){
@@ -46,5 +50,6 @@ export default class Info extends Component {
         }
 
         loop();
+        dragElement($info, (window.titleBarHeight)?(window.titleBarHeight.get()):0);
     }
 }

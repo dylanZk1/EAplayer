@@ -48,6 +48,7 @@
         "detect-file-encoding-and-language": "^2.4.0",
         "eslint": "^8.39.0",
         "glob": "^10.2.2",
+        "html2canvas": "^1.4.1",
         "lerna": "^6.6.1",
         "prettier": "^2.8.8",
         "prompts": "^2.4.2",

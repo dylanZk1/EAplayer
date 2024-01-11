@@ -124,6 +124,10 @@ export default function eventInit(art) {
         }
     });
 
+    // async function changeThumber(state){
+    //     art.emit('changeThumbar',state);
+    // }
+
     // art.on('video:ratechange', () => {
 
     // });

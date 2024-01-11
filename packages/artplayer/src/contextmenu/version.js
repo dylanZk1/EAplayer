@@ -5,5 +5,9 @@ export default function version(option) {
         ...option,
         // html: `<a href="https://artplayer.org" target="_blank">ArtPlayer ${process.env.APP_VER}</a>`,
         html: '<a href="https://artplayer.org" target="_blank">'+player+' '+version+'</a>',
+        click: (contextmenu)=>{
+            window.open('https://artplayer.org');
+            contextmenu.show = false;
+        }
     };
 }

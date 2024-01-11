@@ -104,3 +104,54 @@ export function getIcon(key = '', html = '') {
     append(icon, html);
     return icon;
 }
+
+export function dragElement(elmnt,extraHeight = 0, extraWidth = 0) {
+    var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+    let sh;
+    if (document.getElementById(elmnt.id + "header")) {
+        // if present, the header is where you move the DIV from:
+        document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+    } else {
+        // otherwise, move the DIV from anywhere inside the DIV:
+        elmnt.onmousedown = dragMouseDown;
+    }
+
+    function dragMouseDown(e) {
+        e = e || window.event;
+        e.preventDefault();
+        // get the mouse cursor position at startup:
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        document.onmouseup = closeDragElement;
+        // call a function whenever the cursor moves:
+        document.onmousemove = elementDrag;
+    }
+
+    function elementDrag(e) {
+        e = e || window.event;
+        e.preventDefault();
+        // calculate the new cursor position:
+        pos1 = pos3 - e.clientX;
+        pos2 = pos4 - e.clientY;
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        // set the element's new position:
+        if(sh === undefined){
+            sh = (window.titleBarHeight)?(window.titleBarHeight).get():0;
+        }
+        let h = extraHandle(extraHeight,sh);
+        // let w = extraHandle(extraWidth,(window.titleBarHeight)?(window.titleBarHeight).get():0);
+        elmnt.style.top = (((elmnt.offsetTop - pos2)<=h)?h:Math.min((elmnt.offsetTop - pos2),document.documentElement.clientHeight - elmnt.clientHeight)) + "px";
+        elmnt.style.left = ((elmnt.offsetLeft - pos1)<=extraWidth?extraWidth:Math.min((elmnt.offsetLeft - pos1),document.documentElement.clientWidth - elmnt.clientWidth)) + "px";
+    }
+
+    function closeDragElement() {
+        // stop moving when mouse button is released:
+        document.onmouseup = null;
+        document.onmousemove = null;
+    }
+
+    function extraHandle(extra,stand){
+        return (stand && (extra !== stand) && (stand !== 0)) ? stand : extra;
+    }
+}

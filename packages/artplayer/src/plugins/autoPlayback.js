@@ -1,5 +1,4 @@
 import { secondToTime, setStyle, query, append } from '../utils';
-import cssVarMix from '../player/cssVarMix';
 
 export default function autoPlayback(art) {
 
